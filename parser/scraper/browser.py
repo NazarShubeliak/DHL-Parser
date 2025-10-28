@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from config import logger, CHROME_OPTIONS
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 def create_driver() -> webdriver.Chrome:
     """Initialize and return a Chrome WebDriver instance"""
@@ -14,9 +15,10 @@ def create_driver() -> webdriver.Chrome:
     driver = webdriver.Chrome(options=CHROME_OPTIONS)
     return driver
 
-def accept_cookies(wait: WebDriverWait) -> None:
+def accept_cookies(driver: WebDriver) -> None:
     """Accept DHL's cookie banner if present"""
     try:
+        wait = WebDriverWait(driver, 10)
         cookie_button = wait.until(EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler")))
         cookie_button.click()
         logger.debug("Cookiew accepted")
