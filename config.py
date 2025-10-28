@@ -39,6 +39,8 @@ DATE_FORMAT: str = "%Y-%m-%d"
 
 # DHl Config
 URL: str = "https://geschaeftskunden.dhl.de/billing/invoice/overview"
+USERNAME = os.getenv("USERNAME", "")
+PASSWORD = os.getenv("PASSWORD", "")
 
 # Selenium Setting
 CHROME_OPTIONS: Options = Options()
