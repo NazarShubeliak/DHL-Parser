@@ -5,7 +5,8 @@ from .tools import clean_folder, unzip_archive
 from .invoice_processor import run_invoice_processor
 
 def run_pipeline(start_date: str, end_date: str, download_dir: Path, type: str) -> None:
-    """"""
+    """
+    """
     # Step 1: clear directory
     clean_folder(DATA_DIR)
     logger.info(f"Delete all from dir: {DATA_DIR}")
@@ -20,6 +21,7 @@ def run_pipeline(start_date: str, end_date: str, download_dir: Path, type: str) 
     logger.info("Unzip archive")
 
     # Step 4: parsing all file and get invoice
-    run_invoice_processor(download_dir, type)
+    print(run_invoice_processor(download_dir, type))
+    logger.info("Parsing all files")
 
     # Step 5: add data to Google Sheet

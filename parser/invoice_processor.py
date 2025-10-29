@@ -11,7 +11,7 @@ SUMME_COLUMN = "Produkt / Service"
 def run_invoice_processor(folder_path: str, type: str):
     if type == "inter":
         return get_international_invoices(folder_path)
-    elif type == "invoce":
+    elif type == "invoice":
         return get_domestic_invoice_total(folder_path)
     else:
         logger.error(f"Invalid type: {type}")
@@ -37,6 +37,7 @@ def get_international_invoices(folder_path: Path) -> Dict[str, float]:
             country_totals[country] = country_totals.get(country, 0) + amount
             logger.info(f"{country.encode('ascii', 'ignore').decode()}: +{amount:.2f} EUR")
 
+    return country_totals
 
 def get_domestic_invoice_total(folder_path: Path) -> float:
     """
@@ -58,6 +59,8 @@ def get_domestic_invoice_total(folder_path: Path) -> float:
             amount = summe_row[MONEY_COLUMN].values[0]
             total += amount
             logger.info(f"Summe: +{amount:.2f} EUR")
+
+    return total
 
 
 def extract_summary_table(folder_path: Path) -> Optional[pd.DataFrame]:
