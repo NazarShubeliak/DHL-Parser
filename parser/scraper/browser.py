@@ -2,17 +2,19 @@
 Handles browser setup and cookie acceptance for Klarna scraping.
 """
 
+from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
-from config import logger, CHROME_OPTIONS
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
+from config import logger
+from parser.tools import get_chrome_options
 
-def create_driver() -> webdriver.Chrome:
+def create_driver(download_dir_path: Path) -> webdriver.Chrome:
     """Initialize and return a Chrome WebDriver instance"""
     logger.debug("Launching Chrome browser")
-    driver = webdriver.Chrome(options=CHROME_OPTIONS)
+    driver = webdriver.Chrome(options=get_chrome_options(download_dir_path))
     return driver
 
 def accept_cookies(driver: WebDriver) -> None:

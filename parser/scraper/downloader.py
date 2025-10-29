@@ -1,4 +1,5 @@
 from typing import List
+from time import sleep
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -76,7 +77,7 @@ def file_filter(all_files: list[WebElement], type: str) -> None:
         if type == "invoice":
             if not "INT" in file_text and not "-" in file_value:
                 click_checkbox(file)
-        elif type == "internacional":
+        elif type == "inter":
             if "INT" in file_text and not "-" in file_value:
                 click_checkbox(file)
         else:
@@ -95,3 +96,4 @@ def download(wait: WebDriverWait) -> None:
         EC.presence_of_element_located((By.ID, "button-downloadSelectedInvoices"))
     )
     button.click()
+    sleep(5)

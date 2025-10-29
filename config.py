@@ -44,19 +44,6 @@ DATE_FORMAT: str = "%Y-%m-%d"
 URL: str = "https://geschaeftskunden.dhl.de/billing/invoice/overview"
 USERNAME = os.getenv("DHL_USERNAME", "")
 PASSWORD = os.getenv("DHL_PASSWORD", "")
-print(USERNAME)
-
-# Selenium Setting
-CHROME_OPTIONS: Options = Options()
-
-if not DEBUG_MODE:
-    # Production mode
-    CHROME_OPTIONS.add_argument("--headless")
-    CHROME_OPTIONS.add_argument("--disable-gpu")
-    CHROME_OPTIONS.add_argument("--window-size=1920,1080")
-else:
-    # Debug mode
-    CHROME_OPTIONS.add_argument("--start-maximized")
 
 # Logging Configuration
 LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO").upper()

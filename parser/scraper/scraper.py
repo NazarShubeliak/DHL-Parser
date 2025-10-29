@@ -1,14 +1,15 @@
+from pathlib import Path
 from .browser import create_driver, accept_cookies
 from .login import login
 from .downloader import downloader_run
 from config import logger
-def run_scraper(type: str, url: str) -> None:
+def run_scraper(type: str, url: str, download_dir: Path) -> None:
     """
     """
     logger.debug("Start DHL scraping")
 
     # Step 1: Create driver
-    driver = create_driver()
+    driver = create_driver(download_dir)
     driver.get(url)
     logger.debug("Create driver")
 
