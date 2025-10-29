@@ -8,6 +8,15 @@ COUNTRY_COLUMN = "Zielland"
 MONEY_COLUMN = "Gesamtpreis\nin EUR"
 SUMME_COLUMN = "Produkt / Service"
 
+def run_invoice_processor(folder_path: str, type: str):
+    if type == "inter":
+        return get_international_invoices(folder_path)
+    elif type == "invoce":
+        return get_domestic_invoice_total(folder_path)
+    else:
+        logger.error(f"Invalid type: {type}")
+        raise TypeError(f"Invalid type: {type}")
+
 
 def get_international_invoices(folder_path: Path) -> Dict[str, float]:
     """
@@ -26,7 +35,7 @@ def get_international_invoices(folder_path: Path) -> Dict[str, float]:
         grouped = df.groupby(COUNTRY_COLUMN)[MONEY_COLUMN].sum()
         for country, amount in grouped.items():
             country_totals[country] = country_totals.get(country, 0) + amount
-            logger.info(f"{country}: +{amount:.2f} EUR")
+            logger.info(f"{country.encode('ascii', 'ignore').decode()}: +{amount:.2f} EUR")
 
 
 def get_domestic_invoice_total(folder_path: Path) -> float:
@@ -64,7 +73,8 @@ def extract_summary_table(folder_path: Path) -> Optional[pd.DataFrame]:
     for file_path in folder_path.glob("*.pdf"):
         with pdfplumber.open(file_path) as pdf:
             for page in pdf.pages:
-                if "ZUSAMMENFASSUNG" in page:
+                text = page.extract_text()
+                if "ZUSAMMENFASSUNG" in text:
                     tables = page.extract_tables()
                     if tables:
                         df = pd.DataFrame(tables[0][1:], columns=tables[0][0])

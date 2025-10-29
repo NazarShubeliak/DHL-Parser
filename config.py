@@ -3,6 +3,7 @@ Configuration module for Klarna parser.
 
 Loads environment variables and defines constants used across the project.
 """
+
 import os
 import logging
 from pathlib import Path
@@ -30,9 +31,6 @@ INVOICE_DIR.mkdir(exist_ok=True)
 INTERNAL_DIR = BASE_DIR / DATA_DIR / "internal"
 INTERNAL_DIR.mkdir(exist_ok=True)
 
-# Google Sheet
-GOOGLE_SHEET_NAME: str = os.getenv("GOOGLE_SHEET_NAME", "")
-GOOGLE_SHEET_WORKSHEET_NAME: str = os.getenv("GOOGLE_SHEET_WORKSHEET_NAME", "DHL Reports")
 
 # Google Token
 GOOGLE_TOKEN: str = os.getenv("GOOGLE_TOKEN", "token.json")
@@ -53,10 +51,56 @@ LOG_FILE: Path = LOG_DIR / "dhl_parser.log"
 logging.basicConfig(
     level=getattr(logging, LOG_LEVEL, logging.INFO),
     format=LOG_FORMAT,
-    handlers=[
-        logging.FileHandler(LOG_FILE),
-        logging.StreamHandler()
-    ]
+    handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()],
 )
 
+logging.getLogger("pdfminer").setLevel(logging.WARNING)
 logger = logging.getLogger("dhl_parser")
+
+
+# Google Sheet
+GOOGLE_SHEET_NAME: str = os.getenv("GOOGLE_SHEET_NAME", "")
+GOOGLE_SHEET_WORKSHEET_NAME: str = os.getenv(
+    "GOOGLE_SHEET_WORKSHEET_NAME", "DHL Reports"
+)
+GOOGLE_SHEET_RANGE: str = os.getenv("GOOGLE_SHEET_RANGE", "A1:B1")
+
+COUNTRY_ORDER = [
+    "AT",
+    "BE",
+    "CH",
+    "DE",
+    "FR",
+    "IT",
+    "NL",
+    "CZ",
+    "PL",
+    "ES",
+    "UK",
+    "US",
+    "SE",
+    "DK",
+    "NO",
+    "IE",
+    "FI",
+]
+GERMAN_TO_ISO = {
+    "Österreich": "AT",
+    "Belgien": "BE",
+    "Schweiz": "CH",
+    "Deutschland": "DE",
+    "Frankreich": "FR",
+    "Italien": "IT",
+    "Niederlande": "NL",
+    "Tschech. Rep.": "CZ",
+    "Polen": "PL",
+    "Spanien": "ES",
+    "Vereinigtes Königreich": "UK",
+    "Großbritannien": "UK", 
+    "Vereinigte Staaten": "US",
+    "Schweden": "SE",
+    "Dänemark": "DK",
+    "Norwegen": "NO",
+    "Irland": "IE",
+    "Finnland": "FI",
+}

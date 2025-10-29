@@ -1,7 +1,8 @@
 from pathlib import Path
-from parser.tools import clean_folder, unzip_archive
 from config import DATA_DIR, logger, URL
-from parser.scraper.scraper import run_scraper
+from .scraper import run_scraper
+from .tools import clean_folder, unzip_archive
+from .invoice_processor import run_invoice_processor
 
 def run_pipeline(start_date: str, end_date: str, download_dir: Path, type: str) -> None:
     """"""
@@ -18,6 +19,7 @@ def run_pipeline(start_date: str, end_date: str, download_dir: Path, type: str) 
     unzip_archive(download_dir)
     logger.info("Unzip archive")
 
-    # Step 4: parsing all file and get data
+    # Step 4: parsing all file and get invoice
+    run_invoice_processor(download_dir, type)
 
     # Step 5: add data to Google Sheet
