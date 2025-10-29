@@ -91,4 +91,3 @@ def unzip_archive(folder_path: Path) -> None:
                 logger.info(f"Deleted archive: {zip_file.name}")
             except zipfile.BadZipFile:
                 logger.error(f"Invalid ZIP file: {zip_file.name}")
-                
