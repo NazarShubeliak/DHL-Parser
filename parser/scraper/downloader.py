@@ -64,7 +64,7 @@ def file_filter(all_files: list[WebElement], type: str) -> None:
         ValueError: If type is invalid.
     """
     for file in all_files:
-        cell = file.find_element(By.TAG_NAME, "td")
+        cell = file.find_elements(By.TAG_NAME, "td")
         file_text = cell[3].text
         file_value = cell[4].text
 

@@ -21,11 +21,14 @@ DEBUG_MODE: bool = os.getenv("DEBUG_MODE", "false").lower() == "true"
 LOG_DIR: Path = BASE_DIR / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
-INVOICE_DIR = BASE_DIR / "data" / "invoice"
-INTERNAL_DIR = BASE_DIR / "data" / "internal"
+DATA_DIR = BASE_DIR / "data"
+DATA_DIR.mkdir(exist_ok=True)
 
-INVOICE_DIR.mkdir(parents=True, exist_ok=True)
-INTERNAL_DIR.mkdir(parents=True, exist_ok=True)
+INVOICE_DIR = BASE_DIR / DATA_DIR / "invoice"
+INVOICE_DIR.mkdir(exist_ok=True)
+
+INTERNAL_DIR = BASE_DIR / DATA_DIR / "internal"
+INTERNAL_DIR.mkdir(exist_ok=True)
 
 # Google Sheet
 GOOGLE_SHEET_NAME: str = os.getenv("GOOGLE_SHEET_NAME", "")
@@ -39,8 +42,9 @@ DATE_FORMAT: str = "%Y-%m-%d"
 
 # DHl Config
 URL: str = "https://geschaeftskunden.dhl.de/billing/invoice/overview"
-USERNAME = os.getenv("USERNAME", "")
-PASSWORD = os.getenv("PASSWORD", "")
+USERNAME = os.getenv("DHL_USERNAME", "")
+PASSWORD = os.getenv("DHL_PASSWORD", "")
+print(USERNAME)
 
 # Selenium Setting
 CHROME_OPTIONS: Options = Options()

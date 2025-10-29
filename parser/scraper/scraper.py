@@ -1,11 +1,11 @@
-from scraper.browser import create_driver, accept_cookies
-from scraper.login import login
-from downloader import downloader_run
+from .browser import create_driver, accept_cookies
+from .login import login
+from .downloader import downloader_run
 from config import logger
 def run_scraper(type: str, url: str) -> None:
     """
     """
-    logger.degug("Start DHL scraping")
+    logger.debug("Start DHL scraping")
 
     # Step 1: Create driver
     driver = create_driver()

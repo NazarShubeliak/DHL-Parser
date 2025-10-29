@@ -17,6 +17,15 @@ def login(driver: WebDriver) -> None:
     """
     wait = WebDriverWait(driver, 15)
 
+    # Step 1: Press login button
+    login_button = wait.until(EC.presence_of_all_elements_located((By.ID, "button-noName")))
+    if login_button:
+        driver.execute_script('document.querySelector("#button-noName").click();')
+        logger.debug("Click Login button")
+    else:
+        logger.error("Error not found Login button")
+        raise TimeoutError("Not found button")
+
     # ----- Find Login Form -----
     logger.debug("Find login form")
     try:
