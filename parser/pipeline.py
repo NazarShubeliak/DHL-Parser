@@ -1,8 +1,9 @@
 from pathlib import Path
-from config import DATA_DIR, logger, URL
+from config import DATA_DIR, logger, URL, GOOGLE_SHEET_NAME, GOOGLE_SHEET_WORKSHEET_NAME, GOOGLE_TOKEN
 from .scraper import run_scraper
 from .tools import clean_folder, unzip_archive
 from .invoice_processor import run_invoice_processor
+from .sheet import SheetService
 
 def run_pipeline(start_date: str, end_date: str, download_dir: Path, type: str) -> None:
     """
@@ -21,7 +22,5 @@ def run_pipeline(start_date: str, end_date: str, download_dir: Path, type: str) 
     logger.info("Unzip archive")
 
     # Step 4: parsing all file and get invoice
-    print(run_invoice_processor(download_dir, type))
+    run_invoice_processor(download_dir, type)
     logger.info("Parsing all files")
-
-    # Step 5: add data to Google Sheet
